@@ -1,0 +1,53 @@
+[
+    {
+        "id": 1,
+        "title": "ticket title1",
+        "content": "ticket content2",
+        "relatedKnowledge": [
+            {
+                "id": 1,
+                "title": "knowledge title",
+                "source": "related knowledge source",
+                "link": "http://xxx.com",
+                "content": "knowledge content"
+            }
+        ],
+        "generatedResponses": [
+            {
+                "id": 1,
+                "content": "generated response content"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "ticket title2",
+        "content": "ticket content2",
+        "relatedKnowledge": [
+            {
+                "id": 2,
+                "title": "knowledge title 1",
+                "source": "related knowledge source",
+                "link": "http://xxx.com",
+                "content": "knowledge content"
+            },
+            {
+                "id": 2,
+                "title": "knowledge title 2",
+                "source": "related knowledge source",
+                "link": "http://xxx.com",
+                "content": "knowledge content"
+            }
+        ],
+        "generatedResponses": [
+            {
+                "id": 1,
+                "content": "generated response content"
+            },
+            {
+                "id": 2,
+                "content": "generated response content"
+            }
+        ]
+    }
+]

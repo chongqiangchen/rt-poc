@@ -1,9 +1,13 @@
-import { Button } from "@/components/ui/button";
+import Header from "@/components/header";
+import { InputForm } from "@/components/startSessionForm";
+import TicketLists from "@/components/ticketLists";
 
 export default function Home() {
   return (
     <div>
-      <Button>Click me</Button>
+      <Header />
+      <InputForm />
+      <TicketLists />
     </div>
   );
 }

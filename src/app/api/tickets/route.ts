@@ -1,0 +1,46 @@
+import connectDb from "@/lib/conncetDb";
+import Ticket from "@/models/Ticket";
+import { NextResponse } from "next/server";
+import ticketsData from "../../../data/tickets.json";
+import logger from "@/lib/logger";
+
+export async function POST() {
+  await connectDb();
+
+  try {
+    const existingCount = await Ticket.countDocuments();
+
+    if (existingCount === 0) {
+      await Ticket.insertMany(ticketsData);
+      logger.info("Tickets loaded into database");
+      return NextResponse.json({ message: "Tickets loaded" }, { status: 200 });
+    } else {
+      logger.info("Tickets already loaded");
+      return NextResponse.json(
+        { message: "Tickets already loaded" },
+        { status: 200 }
+      );
+    }
+  } catch (error) {
+    logger.error("Failed to load tickets", { error });
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  await connectDb();
+
+  try {
+    const tickets = await Ticket.find({});
+    return NextResponse.json(tickets, { status: 200 });
+  } catch (error) {
+    logger.error("Failed to fetch tickets", { error });
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
