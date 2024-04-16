@@ -16,6 +16,7 @@ const knowledgeSchema = new Schema({
 });
 
 const ticketSchema = new Schema({
+  _id: { type: String, required: true },
   ticket_id: { type: String, required: true },
   group: { type: String, required: true },
   ticket_content: {

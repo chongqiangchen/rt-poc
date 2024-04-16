@@ -11,7 +11,11 @@ export async function POST() {
     const existingCount = await Ticket.countDocuments();
 
     if (existingCount === 0) {
-      await Ticket.insertMany(ticketsData);
+      const modifiedTicketsData = ticketsData.map((ticket) => ({
+        ...ticket,
+        _id: ticket.ticket_id,
+      }));
+      await Ticket.insertMany(modifiedTicketsData);
       logger.info("Tickets loaded into database");
       return NextResponse.json({ message: "Tickets loaded" }, { status: 200 });
     } else {

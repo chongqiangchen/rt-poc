@@ -9,7 +9,7 @@ const createSession = ({
     return response.data;
   });
 
-export default function useSession() {
+export default function useStartSession() {
   return useMutation({
     mutationKey: ["session"],
     mutationFn: createSession,

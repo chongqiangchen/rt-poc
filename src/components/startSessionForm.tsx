@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import useSessionStore from "@/store/sessionStore";
-import useSession from "@/lib/requests/useSession";
+import useStartSession from "@/lib/requests/useStartSession";
 
 const FormSchema = z.object({
   email: z
@@ -41,10 +41,11 @@ export function InputForm() {
   });
 
   const { setEmail, setSessionId } = useSessionStore();
-  const { mutate: createSession, isPending: isCreatingSession } = useSession();
+  const { mutate: startSession, isPending: isCreatingSession } =
+    useStartSession();
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
-    createSession(
+    startSession(
       { email: formData.email },
       {
         onSuccess: (data) => {
