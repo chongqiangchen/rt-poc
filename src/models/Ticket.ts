@@ -1,26 +1,32 @@
-import mongoose from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-const relatedKnowledgeSchema = new mongoose.Schema({
-  id: Number,
-  title: String,
-  link: String,
-  content: String,
-  source: String,
+const responseSchema = new Schema({
+  answer: { type: String, required: true },
 });
 
-const generatedResponseSchema = new mongoose.Schema({
-  id: Number,
-  content: String,
-});
-
-const ticketSchema = new mongoose.Schema({
-  id: { type: Number, required: true },
-  title: { type: String, required: true },
+const knowledgeSchema = new Schema({
+  rank: { type: Number, required: true },
+  source: { type: String, required: true },
   content: { type: String, required: true },
-  relatedKnowledge: [relatedKnowledgeSchema],
-  generatedResponses: [generatedResponseSchema],
+  metadata: {
+    title: String,
+    category: String,
+    link: String,
+  },
 });
 
-const Ticket = mongoose.models.Ticket || mongoose.model("Ticket", ticketSchema);
+const ticketSchema = new Schema({
+  ticket_id: { type: String, required: true },
+  group: { type: String, required: true },
+  ticket_content: {
+    ticket_title: { type: String, required: true },
+    ticket_description: { type: String, required: true },
+    previous_response: String,
+  },
+  response: [responseSchema],
+  related_knowledge: [knowledgeSchema],
+});
+
+const Ticket = models.Ticket || model("Ticket", ticketSchema);
 
 export default Ticket;

@@ -14,6 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import useSessionStore from "@/store/sessionStore";
 import useSession from "@/lib/requests/useSession";
@@ -33,7 +41,7 @@ export function InputForm() {
   });
 
   const { setEmail, setSessionId } = useSessionStore();
-  const { mutate: createSession } = useSession();
+  const { mutate: createSession, isPending: isCreatingSession } = useSession();
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
     createSession(
@@ -50,34 +58,61 @@ export function InputForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 flex">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="flex flex-col justify-center item-center">
-              <div className="flex">
-                <FormLabel className="my-auto text-primary">
-                  Agent Email
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    className="rounded-r-none focus-visible:ring-0"
-                    placeholder="Enter your email to begin"
-                    {...field}
-                  />
-                </FormControl>
-              </div>
+    <Card className="w-[600px] h-[400px] shadow-lg p-8 rounded-lg place-self-center">
+      <CardHeader>
+        <CardTitle>Welcome to the readytech Ticket Assist trial.</CardTitle>
+        <CardDescription>
+          Please enter your email to start using Ticket Assist.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="flex flex-col justify-center item-center w-full">
+                  <FormLabel className="my-auto text-primary font-bold">
+                    Agent Email
+                  </FormLabel>
+                  <div className="flex">
+                    <FormControl>
+                      <Input
+                        className="rounded-r-none focus-visible:ring-0"
+                        placeholder="your.name@readytech.io"
+                        {...field}
+                      />
+                    </FormControl>
+                    <Button
+                      className="rounded-l-none w-1/4"
+                      type="submit"
+                      disabled={isCreatingSession}
+                    >
+                      {isCreatingSession ? (
+                        <span>Loading...</span>
+                      ) : (
+                        <span>Start</span>
+                      )}
+                    </Button>
+                  </div>
 
-              <FormMessage className="ml-auto" />
-            </FormItem>
-          )}
-        />
-        <Button className="rounded-l-none" type="submit">
-          Start session
-        </Button>
-      </form>
-    </Form>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </CardContent>
+      <CardFooter className="flex-col items-start">
+        <p className="leading-7 [&:not(:first-child)]:mt-6">
+          At the end of your session please logout to rate your experience and
+          help us improve the tool.
+        </p>
+        <p className="leading-7 [&:not(:first-child)]:mt-6">
+          Thanks for participating.
+        </p>
+      </CardFooter>
+    </Card>
   );
 }

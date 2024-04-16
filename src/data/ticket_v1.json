@@ -1,0 +1,28 @@
+{
+	"ticket_id": "12345", // string, mandatory 
+	"group": "Vetrek/JRPlus", // string, mandatory 
+	"ticket_content": {
+		"ticket_title": "xxxxxx", //string, mandatory 
+		"ticket_description": "xxxxxx", //string, mandatory 
+		"previous_response": "xxxxxx" //string, optional, can be merged into ticket_description
+	},
+	
+	"response": [
+		{
+			"answer": "xxxxx", //string, mandatory	
+		}
+	],
+
+	"related_knowledge": [
+		{
+		"rank": 0,  // int, mandatory
+		"source": "knowledge source", //string, mandatory
+		"content": "knowledge content", //string, mandatory
+		"metadata": {       //optional, show additional infomation of the knowledge, 
+			"title": "knowledge title", //string, optional
+			"category": "knowledge category", //string, optional,
+			"link": "knowledge file link" //string, optional,
+			}
+		}
+	]
+}

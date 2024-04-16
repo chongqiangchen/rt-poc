@@ -9,13 +9,15 @@ export default function TicketLists() {
     isError: isTicketsError,
   } = useTickets();
   return (
-    <div>
+    <div className="flex-1 place-self-center">
       {isLoadingTickets ? (
         <span>loading</span>
       ) : isTicketsError ? (
         <span>ticket error</span>
       ) : (
-        tickets?.map((ticket) => <div key={ticket.id}>{ticket.title}</div>)
+        tickets?.map((ticket) => (
+          <div key={ticket.ticket_id}>{ticket.ticket_content.ticket_title}</div>
+        ))
       )}
     </div>
   );

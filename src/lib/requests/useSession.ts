@@ -1,4 +1,3 @@
-import { type TicketType } from "@/models/schemas/ticketSchema";
 import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "../axiosInstance";
 import { SessionType } from "@/models/schemas/sessionSchema";
