@@ -32,6 +32,18 @@ const ticketSchema = z.object({
   related_knowledge: z.array(knowledgeZodSchema),
 });
 
-type TicketType = z.infer<typeof ticketSchema>;
+const modifiedTicketSchema = z.object({
+  ticket_id: z.string(),
+  group: z.string(),
+  ticket_title: z.string(),
+});
 
-export { type TicketType };
+type TicketType = z.infer<typeof ticketSchema>;
+type ModifiedTicketType = z.infer<typeof modifiedTicketSchema>;
+
+export {
+  ticketSchema,
+  modifiedTicketSchema,
+  type TicketType,
+  type ModifiedTicketType,
+};

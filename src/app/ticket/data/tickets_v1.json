@@ -1,0 +1,101 @@
+[
+    {
+        "_id": "12345",
+        "ticket_id": "12345",
+        "group": "Vetrek",
+        "ticket_content": {
+            "ticket_title": "ticket title 1",
+            "ticket_description": "ticket description 1",
+            "previous_response": "previous response"
+        },
+        "response": [
+            {
+                "_id": "answer 6",
+                "answer": "response 1"
+            }
+        ],
+        "related_knowledge": [
+            {
+                "_id": "knowledge 1",
+                "rank": 0,
+                "source": "knowledge source 1",
+                "content": "knowledge content 1",
+                "metadata": {
+                    "title": "knowledge title 1",
+                    "category": "knowledge category",
+                    "link": "https://knowledge1.com"
+                }
+            },
+            {
+                "_id": "knowledge 2",
+                "rank": 1,
+                "source": "knowledge source 2",
+                "content": "knowledge content 2",
+                "metadata": {
+                    "title": "knowledge title 2",
+                    "category": "knowledge category",
+                    "link": "https://knowledge2.com"
+                }
+            }
+        ]
+    },
+    {
+        "_id": "67890",
+        "ticket_id": "67890",
+        "group": "JRPlus",
+        "ticket_content": {
+            "ticket_title": "ticket title 2",
+            "ticket_description": "ticket description 2",
+            "previous_response": "previous response"
+        },
+        "response": [
+            {
+                "_id": "answer 1",
+                "answer": "response 1"
+            },
+            {
+                "_id": "answer 2",
+                "answer": "response 2"
+            },
+            {
+                "_id": "answer 3",
+                "answer": "response 3"
+            }
+        ],
+        "related_knowledge": [
+            {
+                "_id": "knowledge 3",
+                "rank": 0,
+                "source": "knowledge source 1",
+                "content": "knowledge content 1",
+                "metadata": {
+                    "title": "knowledge title 1",
+                    "category": "knowledge category",
+                    "link": "https://knowledge1.com"
+                }
+            },
+            {
+                "_id": "knowledge 3",
+                "rank": 1,
+                "source": "knowledge source 2",
+                "content": "knowledge content 2",
+                "metadata": {
+                    "title": "knowledge title 2",
+                    "category": "knowledge category",
+                    "link": "https://knowledge2.com"
+                }
+            },
+            {
+                "_id": "knowledge 4",
+                "rank": 2,
+                "source": "knowledge source 3",
+                "content": "knowledge content 3",
+                "metadata": {
+                    "title": "knowledge title 3",
+                    "category": "knowledge category",
+                    "link": "https://knowledge3.com"
+                }
+            }
+        ]
+    }
+]

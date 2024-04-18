@@ -4,10 +4,12 @@ import React from "react";
 import { Button } from "./ui/button";
 import useUpdateSession from "@/lib/requests/useUpdateSession";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { email, resetSession, sessionId } = useSessionStore();
   const { mutate: updateSession } = useUpdateSession();
+  const router = useRouter();
   return (
     <div className="w-full flex justify-between items-center px-4 py-4 bg-gray-300">
       <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
@@ -26,6 +28,7 @@ export default function Header() {
                 {
                   onSuccess: () => {
                     resetSession();
+                    router.push("/");
                   },
                   onError: () => {
                     toast.error("Log out failed, please try again");
