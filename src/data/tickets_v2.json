@@ -1,25 +1,22 @@
 [
     {
-        "_id": "12345",
         "ticket_id": "12345",
         "group": "Vetrek",
         "topic": "topic 1",
         "ticket_content": {
             "ticket_title": "ticket title 1",
-            "ticket_description": "ticket description 1",
+            "ticket_description": "Nulla qui sint mollit nisi consequat irure laborum sint id culpa labore reprehenderit cillum. Consectetur quis ex duis ex aliqua voluptate officia aute ex nisi. In minim proident velit proident officia sit ullamco aliqua occaecat id et sit est eiusmod. Eu nulla et minim ullamco nisi exercitation est incididunt amet voluptate cillum nulla esse. Occaecat exercitation duis consectetur labore ea proident nostrud quis aliqua consectetur sit. Aliqua id mollit qui consectetur ex ea quis sit nisi quis exercitation commodo et tempor.",
             "previous_response": "previous response"
         },
         "response": [
             {
-                "_id": "answer 6",
                 "answer": "response 1"
             }
         ],
         "related_knowledge": [
             {
-                "_id": "knowledge 1",
                 "rank": 0,
-                "source": "knowledge source 1",
+                "source": "s3://knowledge-base-in-sydney/freshdesk/JR-Plus_51000305456.txt",
                 "content": "Culpa reprehenderit occaecat mollit sint magna do veniam reprehenderit officia anim elit officia deserunt adipisicing. Aute ullamco dolor tempor ex est qui. Lorem ea velit consectetur cillum quis esse est. Excepteur sint qui proident incididunt aliqua ea labore. Nostrud sit culpa incididunt adipisicing aliqua id mollit est ipsum. Tempor ut adipisicing ad do dolor amet incididunt culpa.",
                 "metadata": {
                     "title": "knowledge title 1",
@@ -28,9 +25,8 @@
                 }
             },
             {
-                "_id": "knowledge 2",
                 "rank": 1,
-                "source": "knowledge source 2",
+                "source": "s3://knowledge-base-in-sydney/confluence/JR-Plus_51000305456.txt",
                 "content": "Tempor dolore dolore velit quis quis cillum magna veniam aute dolor aute fugiat cillum. Deserunt id cillum magna ex tempor qui elit id in in. Cillum commodo cillum amet eiusmod id deserunt est adipisicing amet nostrud amet. Commodo sunt nulla sint sit. Et magna elit reprehenderit ad exercitation consectetur aute consectetur magna do labore. Eiusmod aliquip ex labore voluptate. Aute minim dolor incididunt excepteur veniam esse qui eiusmod. Elit anim deserunt adipisicing ea non nostrud pariatur proident. Excepteur exercitation cillum aliqua ea non aute enim non. Excepteur ea dolor sit veniam sit do et et eiusmod qui veniam. Aliqua aliqua nisi magna laborum dolore qui elit exercitation pariatur.",
                 "metadata": {
                     "title": "knowledge title 2",
@@ -41,7 +37,6 @@
         ]
     },
     {
-        "_id": "67890",
         "ticket_id": "67890",
         "group": "JRPlus",
         "topic": "topic 2",
@@ -52,23 +47,19 @@
         },
         "response": [
             {
-                "_id": "answer 1",
                 "answer": "response 1"
             },
             {
-                "_id": "answer 2",
                 "answer": "response 2"
             },
             {
-                "_id": "answer 3",
                 "answer": "response 3"
             }
         ],
         "related_knowledge": [
             {
-                "_id": "knowledge 3",
                 "rank": 0,
-                "source": "knowledge source 1",
+                "source": "s3://knowledge-base-in-sydney/freshdesk/JR-Plus_51000305456.txt",
                 "content": "Culpa reprehenderit occaecat mollit sint magna do veniam reprehenderit officia anim elit officia deserunt adipisicing. Aute ullamco dolor tempor ex est qui. Lorem ea velit consectetur cillum quis esse est. Excepteur sint qui proident incididunt aliqua ea labore. Nostrud sit culpa incididunt adipisicing aliqua id mollit est ipsum. Tempor ut adipisicing ad do dolor amet incididunt culpa.",
                 "metadata": {
                     "title": "knowledge title 1",
@@ -77,9 +68,8 @@
                 }
             },
             {
-                "_id": "knowledge 3",
                 "rank": 1,
-                "source": "knowledge source 2",
+                "source": "s3://knowledge-base-in-sydney/confluence/JR-Plus_51000305456.txt",
                 "content": "knowledge content 2",
                 "metadata": {
                     "title": "knowledge title 2",
@@ -88,9 +78,8 @@
                 }
             },
             {
-                "_id": "knowledge 4",
                 "rank": 2,
-                "source": "knowledge source 3",
+                "source": "s3://knowledge-base-in-sydney/government-docs/JR-Plus_51000305456.txt",
                 "content": "Tempor dolore dolore velit quis quis cillum magna veniam aute dolor aute fugiat cillum. Deserunt id cillum magna ex tempor qui elit id in in. Cillum commodo cillum amet eiusmod id deserunt est adipisicing amet nostrud amet. Commodo sunt nulla sint sit. Et magna elit reprehenderit ad exercitation consectetur aute consectetur magna do labore. Eiusmod aliquip ex labore voluptate. Aute minim dolor incididunt excepteur veniam esse qui eiusmod. Elit anim deserunt adipisicing ea non nostrud pariatur proident. Excepteur exercitation cillum aliqua ea non aute enim non. Excepteur ea dolor sit veniam sit do et et eiusmod qui veniam. Aliqua aliqua nisi magna laborum dolore qui elit exercitation pariatur.",
                 "metadata": {
                     "title": "knowledge title 3",

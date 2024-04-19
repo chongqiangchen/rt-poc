@@ -23,6 +23,7 @@ const ticketSchema = z.object({
   _id: z.string(),
   ticket_id: z.string(),
   group: z.string(),
+  topic: z.string(),
   ticket_content: z.object({
     ticket_title: z.string(),
     ticket_description: z.string(),
@@ -35,6 +36,7 @@ const ticketSchema = z.object({
 const modifiedTicketSchema = z.object({
   ticket_id: z.string(),
   group: z.string(),
+  topic: z.string(),
   ticket_title: z.string(),
 });
 

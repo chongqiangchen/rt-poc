@@ -4,36 +4,32 @@ import { z } from "zod";
 
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
-import useTickets from "@/lib/requests/useTickets";
+
 import {
   ModifiedTicketType,
+  TicketType,
   ticketSchema,
 } from "@/models/schemas/ticketSchema";
+import axiosInstance from "@/lib/axiosInstance";
+import connectDb from "@/lib/conncetDb";
+import Ticket from "@/models/Ticket";
 
 async function getTickets() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "src/app/ticket/data/tickets_v1.json")
-  );
+  await connectDb();
+  const tickets = (await Ticket.find({})) as TicketType[];
+  // const parsedTickets = z.array(ticketSchema).parse(tickets);
 
-  const tickets = JSON.parse(data.toString());
-  const parsedTickets = z.array(ticketSchema).parse(tickets);
-
-  return parsedTickets.map((ticket) => {
+  return tickets.map((ticket) => {
     return {
       ticket_id: ticket.ticket_id,
       group: ticket.group,
+      topic: ticket.topic,
       ticket_title: ticket.ticket_content.ticket_title,
     } satisfies ModifiedTicketType;
   });
 }
 
 export default async function TaskPage() {
-  // const {
-  //   data: tickets,
-  //   isLoading: isLoadingTickets,
-  //   isError: isTicketsError,
-  // } = useTickets();
-
   const tickets = await getTickets();
 
   return (

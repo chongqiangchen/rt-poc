@@ -62,9 +62,15 @@ dependencies:
   cmdk:
     specifier: ^1.0.0
     version: 1.0.0(@types/react-dom@18.0.0)(@types/react@18.0.0)(react-dom@18.0.0)(react@18.0.0)
+  embla-carousel-react:
+    specifier: ^8.0.2
+    version: 8.0.2(react@18.0.0)
   immer:
     specifier: ^10.0.4
     version: 10.0.4
+  lucide:
+    specifier: ^0.371.0
+    version: 0.371.0
   lucide-react:
     specifier: ^0.368.0
     version: 0.368.0(react@18.0.0)
@@ -1810,6 +1816,28 @@ packages:
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
+  /embla-carousel-react@8.0.2(react@18.0.0):
+    resolution: {integrity: sha512-RHe1GKLulOW8EDN+cJgbFbVVfRXcaLT2/89dyVw3ONGgVpZjD19wB87I1LUZ1aCzOSrTccx0PFSQanK4OOfGPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0
+    dependencies:
+      embla-carousel: 8.0.2
+      embla-carousel-reactive-utils: 8.0.2(embla-carousel@8.0.2)
+      react: 18.0.0
+    dev: false
+
+  /embla-carousel-reactive-utils@8.0.2(embla-carousel@8.0.2):
+    resolution: {integrity: sha512-nLZqDkQdO0hvOP49/dUwjkkepMnUXgIzhyRuDjwGqswpB4Ibnc5M+w7rSQQAM+uMj0cPaXnYOTlv8XD7I/zVNw==}
+    peerDependencies:
+      embla-carousel: 8.0.2
+    dependencies:
+      embla-carousel: 8.0.2
+    dev: false
+
+  /embla-carousel@8.0.2:
+    resolution: {integrity: sha512-bogsDO8xosuh/l3PxIvA5AMl3+BnRVAse9sDW/60amzj4MbGS5re4WH5eVEXiuH8G1/3G7QUAX2QNr3Yx8z5rA==}
+    dev: false
+
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
 
@@ -2924,6 +2952,10 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.0.0
+    dev: false
+
+  /lucide@0.371.0:
+    resolution: {integrity: sha512-S0XDtPNaZ2nlxk3SZ7zltfovEEXDpSWNGlk58+7M+Pl9t9p4hc0x8JN4cIAiJImxNau7DHc5dMCEmEFGrvRxFg==}
     dev: false
 
   /memory-pager@1.5.0:

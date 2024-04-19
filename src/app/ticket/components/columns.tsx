@@ -46,8 +46,25 @@ export const columns: ColumnDef<ModifiedTicketType>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      console.log(row, id, value, row.getValue(id), "in filter fun");
-
+      return value.includes(row.getValue(id));
+    },
+    enableHiding: false,
+  },
+  {
+    accessorKey: "topic",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Topic" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">
+            {row.getValue("topic")}
+          </span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
     enableHiding: false,

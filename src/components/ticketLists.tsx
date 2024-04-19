@@ -1,5 +1,5 @@
 "use client";
-import useTickets from "@/lib/requests/useTickets";
+import { useTickets } from "@/lib/requests/useTickets";
 import React from "react";
 
 export default function TicketLists() {
