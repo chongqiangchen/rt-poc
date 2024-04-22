@@ -18,3 +18,18 @@ export const topics = [
     label: "Topic 2",
   },
 ];
+
+export const sources = [
+  {
+    value: "freshdesk",
+    label: "Freshdesk",
+  },
+  {
+    value: "confluence",
+    label: "Confluence",
+  },
+  {
+    value: "government-docs",
+    label: "Government Docs",
+  },
+];

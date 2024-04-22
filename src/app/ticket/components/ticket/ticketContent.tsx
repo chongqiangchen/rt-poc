@@ -15,7 +15,7 @@ export default function TicketContent({ ticket }: { ticket: TicketType }) {
   const router = useRouter();
   return (
     <div className="flex-1">
-      <div className="flex justify-between items-start min-h-12">
+      <div className="flex justify-between items-center min-h-12">
         <h3>Ticket content</h3>
         <Button
           onClick={() => {

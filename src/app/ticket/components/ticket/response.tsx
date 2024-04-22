@@ -9,6 +9,15 @@ import {
 } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import {
   Carousel,
@@ -36,6 +45,13 @@ export default function Response({ ticket }: { ticket: TicketType }) {
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
+
+  const copyToClipboard = async (text: string) => {
+    if ("clipboard" in navigator) {
+      await navigator.clipboard.writeText(text);
+      toast.success("copied");
+    }
+  };
 
   return (
     <Card>
@@ -86,27 +102,40 @@ export default function Response({ ticket }: { ticket: TicketType }) {
         <Button
           className="min-w-[200px]"
           onClick={() => {
-            toast.success("copied");
-            console.log(
-              "click copy",
-              api && ticket.response[api.selectedScrollSnap()]._id,
-              api && ticket.response[api.selectedScrollSnap()].answer
-            );
+            api &&
+              copyToClipboard(ticket.response[api.selectedScrollSnap()].answer);
           }}
         >
           Copy to clipboard
         </Button>
-        <Button
-          className="min-w-[200px]"
-          onClick={() => {
-            console.log(
-              "click flag",
-              api && ticket.response[api.selectedScrollSnap()]._id
-            );
-          }}
-        >
-          Flag as poor response
-        </Button>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              className="min-w-[200px]"
+              onClick={() => {
+                console.log(
+                  "click flag",
+                  api && ticket.response[api.selectedScrollSnap()]._id
+                );
+              }}
+            >
+              Flag as poor response
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. Are you sure you want to
+                permanently delete this file from our servers?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button type="submit">Confirm</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </Card>
   );
