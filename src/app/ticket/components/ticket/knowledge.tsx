@@ -33,6 +33,7 @@ export default function Knowledge({
               variant={"ghost"}
               size={"icon"}
               onClick={() => {
+                console.log(knowledge._id);
                 setEvaluation((evaluation) =>
                   evaluation === "good" ? undefined : "good"
                 );
@@ -45,6 +46,7 @@ export default function Knowledge({
               variant={"ghost"}
               size={"icon"}
               onClick={() => {
+                console.log(knowledge._id);
                 setEvaluation((evaluation) =>
                   evaluation === "bad" ? undefined : "bad"
                 );

@@ -27,11 +27,13 @@ import {
 } from "@/components/ui/carousel";
 import { TicketType } from "@/models/schemas/ticketSchema";
 import { toast } from "sonner";
+import FlagForm from "./flagForm";
 
 export default function Response({ ticket }: { ticket: TicketType }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+  const [isPoorResponseFormOpen, setIsPoorResponseFormOpen] = useState(false);
 
   useEffect(() => {
     if (!api) {
@@ -102,6 +104,8 @@ export default function Response({ ticket }: { ticket: TicketType }) {
         <Button
           className="min-w-[200px]"
           onClick={() => {
+            console.log(api && ticket.response[api.selectedScrollSnap()]._id);
+
             api &&
               copyToClipboard(ticket.response[api.selectedScrollSnap()].answer);
           }}
@@ -109,11 +113,12 @@ export default function Response({ ticket }: { ticket: TicketType }) {
           Copy to clipboard
         </Button>
 
-        <Dialog>
+        <Dialog open={isPoorResponseFormOpen}>
           <DialogTrigger asChild>
             <Button
               className="min-w-[200px]"
               onClick={() => {
+                setIsPoorResponseFormOpen(true);
                 console.log(
                   "click flag",
                   api && ticket.response[api.selectedScrollSnap()]._id
@@ -124,16 +129,14 @@ export default function Response({ ticket }: { ticket: TicketType }) {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone. Are you sure you want to
-                permanently delete this file from our servers?
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button type="submit">Confirm</Button>
-            </DialogFooter>
+            <FlagForm
+              closeDialog={() => {
+                setIsPoorResponseFormOpen(false);
+              }}
+              responseId={
+                (api && ticket.response[api.selectedScrollSnap()]._id) || ""
+              }
+            />
           </DialogContent>
         </Dialog>
       </CardFooter>
