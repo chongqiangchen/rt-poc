@@ -1,0 +1,241 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import useUpdateSession from "@/lib/requests/useUpdateSession";
+import useSessionStore from "@/store/sessionStore";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { DialogHeader, DialogTitle } from "./ui/dialog";
+
+const reasonItems = [
+  {
+    id: "recents",
+    label: "Recents",
+  },
+  {
+    id: "home",
+    label: "Home",
+  },
+  {
+    id: "applications",
+    label: "Applications",
+  },
+  {
+    id: "desktop",
+    label: "Desktop",
+  },
+  {
+    id: "downloads",
+    label: "Downloads",
+  },
+  {
+    id: "documents",
+    label: "Documents",
+  },
+  { id: "other", label: "Other" },
+] as const;
+
+const formSchema = z.object({
+  reasons: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "You have to select at least one item.",
+  }),
+  otherReason: z.string().optional(),
+  aditionalComments: z.string().optional(),
+});
+
+export default function SurveyForm({ closeDialog }: { closeDialog: Function }) {
+  const { resetSession, sessionId } = useSessionStore();
+  const { mutate: updateSession } = useUpdateSession();
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      reasons: [],
+      otherReason: "",
+      aditionalComments: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+
+    updateSession(
+      {
+        sessionId,
+        updateField: { endTime: new Date() },
+      },
+      {
+        onSuccess: () => {
+          resetSession();
+          closeDialog();
+          toast.success("Logout successful");
+          router.push("/");
+        },
+        onError: () => {
+          toast.error("Log out failed, please try again");
+        },
+      }
+    );
+  }
+  return (
+    <>
+      <DialogHeader className="mb-4">
+        <DialogTitle>End of session survey</DialogTitle>
+      </DialogHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            control={form.control}
+            name="reasons"
+            render={() => (
+              <FormItem>
+                <div className="grid grid-cols-3 w-full">
+                  {reasonItems.slice(0, -1).map((item) => (
+                    <FormField
+                      key={item.id}
+                      control={form.control}
+                      name="reasons"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={item.id}
+                            className="flex flex-row items-center space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...field.value, item.id])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== item.id
+                                        )
+                                      );
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="text-sm font-normal cursor-pointer px-2 py-4">
+                              {item.label}
+                            </FormLabel>
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  ))}
+                </div>
+              </FormItem>
+            )}
+          />
+          <div className="flex items-center justify-between gap-4 h-[52px] relative">
+            <FormField
+              control={form.control}
+              name="reasons"
+              render={() => (
+                <FormItem>
+                  <div>
+                    {reasonItems.slice(-1).map((item) => (
+                      <FormField
+                        key={item.id}
+                        control={form.control}
+                        name="reasons"
+                        render={({ field }) => {
+                          return (
+                            <FormItem
+                              key={item.id}
+                              className="flex items-center space-y-0"
+                            >
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value?.includes(item.id)}
+                                  onCheckedChange={(checked) => {
+                                    return checked
+                                      ? field.onChange([
+                                          ...field.value,
+                                          item.id,
+                                        ])
+                                      : field.onChange(
+                                          field.value?.filter(
+                                            (value) => value !== item.id
+                                          )
+                                        );
+                                  }}
+                                />
+                              </FormControl>
+                              <FormLabel className="text-sm font-normal px-2 py-4 cursor-pointer">
+                                {item.label}
+                              </FormLabel>
+                              <FormMessage className="absolute left-0 bottom-0 translate-y-4" />
+                            </FormItem>
+                          );
+                        }}
+                      />
+                    ))}
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="otherReason"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormControl>
+                    <Input
+                      className="h-10"
+                      placeholder="Please specify"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="aditionalComments"
+            render={({ field }) => (
+              <FormItem className="my-4">
+                <FormLabel>Additional comments: (optional)</FormLabel>
+                <FormControl>
+                  <Textarea {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-end gap-2">
+            <Button
+              type="button"
+              variant={"secondary"}
+              onClick={() => {
+                closeDialog();
+              }}
+            >
+              Cancel
+            </Button>
+            <Button type="submit">Submit and end session</Button>
+          </div>
+        </form>
+      </Form>
+    </>
+  );
+}
