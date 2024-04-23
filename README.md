@@ -34,3 +34,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Setup mongo database
+
+1. start a mongodb server
+2. rename the .env.example to .env
+3. place the source file in src/data
+4. change the imported source name to the source file name in /src/app/api/tickets/route.ts
+5. send a post request to init the database POST http://localhost:3000/api/tickets
