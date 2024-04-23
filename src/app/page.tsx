@@ -16,7 +16,7 @@ export default function Home() {
   }, [sessionId, router]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+    <div className="flex-1 bg-gray-100 flex flex-col items-center">
       <div className="grid w-full flex-1">
         <InputForm />
       </div>
