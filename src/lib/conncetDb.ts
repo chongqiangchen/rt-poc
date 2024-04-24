@@ -10,7 +10,7 @@ const connectDb = async () => {
     await mongoose.connect(
       process.env.MONGO_URI || "mongodb://127.0.0.1:27017",
       {
-        dbName: "reday-tech",
+        dbName: "local",
       }
     );
     logger.info("Connected to MongoDB");
