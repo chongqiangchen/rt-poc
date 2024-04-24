@@ -17,7 +17,7 @@ export async function PATCH(
       currentTicket: { ticket_id: string; end_time: Date };
     };
 
-    // update ticket
+    // update exited ticket end_time
     if (currentTicket) {
       await Session.updateOne(
         { _id: id, "related_tickets._id": currentTicket.ticket_id },
@@ -27,7 +27,7 @@ export async function PATCH(
       );
     }
 
-    // update session and ticket
+    // update session or create a ticket with start time
     const updatedSession = await Session.updateOne(
       { _id: id },
       {
@@ -50,7 +50,7 @@ export async function PATCH(
       );
     }
 
-    // response with newly created ticket id
+    // response with newly created ticket id, then we could use this id to update the corresponding ticket
     const session = await Session.findById(id);
     if (session) {
       const newlyAddedTicket =
