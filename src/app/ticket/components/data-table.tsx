@@ -29,6 +29,8 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { useRouter } from "next/navigation";
 import { TicketType } from "@/models/schemas/ticketSchema";
+import useUpdateSession from "@/lib/requests/useUpdateSession";
+import useSessionStore from "@/store/sessionStore";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,8 +47,9 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-
+  const { sessionId } = useSessionStore();
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const { mutate: updateSession } = useUpdateSession();
 
   const table = useReactTable({
     data,
@@ -70,7 +73,7 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
     debugColumns: true,
   });
-
+  const { setCurrentTicketId } = useSessionStore();
   const router = useRouter();
 
   return (
@@ -103,6 +106,25 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                   className="cursor-pointer"
                   onClick={() => {
+                    updateSession(
+                      {
+                        sessionId,
+                        updateField: {
+                          newTicket: {
+                            ticket_id: (row.original as TicketType).ticket_id,
+                            start_time: new Date(),
+                          },
+                        },
+                      },
+                      {
+                        onSuccess: ({ data }: { data: any }) => {
+                          setCurrentTicketId(data.ticketId);
+                          console.log(data.ticketId);
+                        },
+                      }
+                    );
+                    console.log(`${(row.original as TicketType).ticket_id}`);
+
                     router.push(
                       `/ticket/${(row.original as TicketType).ticket_id}`
                     );
