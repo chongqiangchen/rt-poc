@@ -1,39 +1,22 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
+import {ChevronLeft, ChevronRight} from "lucide-react";
+import React, {useEffect, useState} from "react";
+import {Dialog, DialogContent, DialogTrigger,} from "@/components/ui/dialog";
 
-import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import { TicketType } from "@/models/schemas/ticketSchema";
-import { toast } from "sonner";
+import {Carousel, CarouselApi, CarouselContent, CarouselItem,} from "@/components/ui/carousel";
+import {TicketType} from "@/models/schemas/ticketSchema";
+import {toast} from "sonner";
 import FlagForm from "./flagForm";
+import useTicketTrack from "@/lib/track/useTicketTrack";
+import {ETicketEventName, TResponseCopyEventParams, TResponseSwitchEventParams} from "@/lib/track/track";
 
 export default function Response({ ticket }: { ticket: TicketType }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const [isPoorResponseFormOpen, setIsPoorResponseFormOpen] = useState(false);
+  const {track} = useTicketTrack();
 
   useEffect(() => {
     if (!api) {
@@ -48,12 +31,46 @@ export default function Response({ ticket }: { ticket: TicketType }) {
     });
   }, [api]);
 
+  console.log(ticket.response)
+
   const copyToClipboard = async (text: string) => {
     if ("clipboard" in navigator) {
+      track<TResponseCopyEventParams>({
+        eventName: ETicketEventName.RESPONSE_COPY,
+        data: {
+          targetResponseId: ticket.response[current - 1].id,
+          targetId: ticket.response[current - 1]._id
+        }
+      })
+
       await navigator.clipboard.writeText(text);
       toast.success("copied");
     }
   };
+
+  const handlePrev = () => {
+    track<TResponseSwitchEventParams>({
+      eventName: ETicketEventName.RESPONSE_SWITCH,
+      data: {
+        targetResponseId: ticket.response[current - 2].id,
+        targetId: ticket.response[current - 2]._id,
+        type: 'prev'
+      }
+    })
+    api?.scrollPrev()
+  }
+
+  const handleNext = () => {
+    track<TResponseSwitchEventParams>({
+      eventName: ETicketEventName.RESPONSE_SWITCH,
+      data: {
+        targetResponseId: ticket.response[current].id,
+        targetId: ticket.response[current]._id,
+        type: 'next'
+      }
+    })
+    api?.scrollNext()
+  }
 
   return (
     <Card>
@@ -64,7 +81,7 @@ export default function Response({ ticket }: { ticket: TicketType }) {
             size={"icon"}
             className={!api?.canScrollPrev() ? "text-gray-300" : ""}
             disabled={!api?.canScrollPrev()}
-            onClick={() => api?.scrollPrev()}
+            onClick={handlePrev}
           >
             <ChevronLeft />
           </Button>
@@ -74,7 +91,7 @@ export default function Response({ ticket }: { ticket: TicketType }) {
             size={"icon"}
             className={!api?.canScrollNext() ? "text-gray-300" : ""}
             disabled={!api?.canScrollNext()}
-            onClick={() => api?.scrollNext()}
+            onClick={handleNext}
           >
             <ChevronRight />
           </Button>

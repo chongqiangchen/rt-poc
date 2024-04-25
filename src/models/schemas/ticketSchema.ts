@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const responseZodSchema = z.object({
   _id: z.string(),
+  id: z.string(),
   answer: z.string(),
 });
 
@@ -24,6 +25,7 @@ const ticketSchema = z.object({
   ticket_id: z.string(),
   group: z.string(),
   topic: z.string(),
+  date: z.string().datetime(),
   ticket_content: z.object({
     ticket_title: z.string(),
     ticket_description: z.string(),

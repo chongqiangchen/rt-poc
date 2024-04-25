@@ -1,16 +1,16 @@
 import {Button} from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
 import {TicketType} from "@/models/schemas/ticketSchema";
 import {ThumbsDownIcon, ThumbsUpIcon} from "lucide-react";
 import React, {useState} from "react";
 import Link from "next/link";
 import {cn} from "@/lib/utils";
+import useTicketTrack from "@/lib/track/useTicketTrack";
+import {
+    ETicketEventName,
+    TSourceLinkClickEventParams,
+    TSourceShowMoreEventParams, TSourceThumbsClickEventParams,
+} from "@/lib/track/track";
 
 export default function Knowledge({
                                       knowledge,
@@ -21,6 +21,7 @@ export default function Knowledge({
     const [evaluation, setEvaluation] = useState<"good" | "bad" | undefined>(
         undefined
     );
+    const {track} = useTicketTrack();
 
     return (
         <Card>
@@ -32,6 +33,14 @@ export default function Knowledge({
                         className={cn("truncate", {
                             "underline decoration-dotted underline-offset-4 hover:decoration-solid cursor-pointer": !!knowledge.metadata?.link
                         })}
+                        onClick={() => track<TSourceLinkClickEventParams>({
+                            eventName: ETicketEventName.SOURCE_LINK_CLICK,
+                            data: {
+                                url: knowledge.metadata?.link || "",
+                                rank: knowledge.rank,
+                                _id: knowledge._id
+                            }
+                        })}
                     >
                         {knowledge.rank === 101 || knowledge.rank === 102 ? "Similiar Ticket: " : "Source: "}{knowledge.metadata?.link}
                     </Link>
@@ -42,7 +51,15 @@ export default function Knowledge({
                             size={"icon"}
                             className="w-6 h-6"
                             onClick={() => {
-                                console.log(knowledge._id);
+                                track<TSourceThumbsClickEventParams>({
+                                    eventName: ETicketEventName.SOURCE_THUMBS_CLICK,
+                                    data: {
+                                        _id: knowledge._id,
+                                        rank: knowledge.rank,
+                                        type: "up"
+                                    }
+                                })
+
                                 setEvaluation((evaluation) =>
                                     evaluation === "good" ? undefined : "good"
                                 );
@@ -56,7 +73,15 @@ export default function Knowledge({
                             size={"icon"}
                             className="w-6 h-6"
                             onClick={() => {
-                                console.log(knowledge._id);
+                                track<TSourceThumbsClickEventParams>({
+                                    eventName: ETicketEventName.SOURCE_THUMBS_CLICK,
+                                    data: {
+                                        _id: knowledge._id,
+                                        rank: knowledge.rank,
+                                        type: "down"
+                                    }
+                                })
+
                                 setEvaluation((evaluation) =>
                                     evaluation === "bad" ? undefined : "bad"
                                 );
@@ -67,17 +92,24 @@ export default function Knowledge({
                     </div>
                 </CardTitle>
                 <CardDescription>
-                    Id: <span>{knowledge.rank}</span> - System: {knowledge.source} - Source Date
-                    20xx/xx/xx
+                    <i>
+                        Id: <span>{knowledge.rank}</span>, System: {knowledge.source}, Source Date: 20xx/xx/xx
+                    </i>
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col">
                 <p className={!isExpand ? "line-clamp-3" : ""}>{knowledge.content}</p>
-
                 <Button
                     variant="link"
                     className="p-0 underline decoration-1 self-end"
                     onClick={() => {
+                        track<TSourceShowMoreEventParams>({
+                            eventName: ETicketEventName.SOURCE_SHOW_MORE,
+                            data: {
+                                rank: knowledge.rank,
+                                _id: knowledge._id,
+                            }
+                        })
                         return setIsExpand((isExpand) => !isExpand);
                     }}
                 >
