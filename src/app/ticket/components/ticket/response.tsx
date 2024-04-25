@@ -79,10 +79,6 @@ export default function Response({ ticket }: { ticket: TicketType }) {
             <ChevronRight />
           </Button>
         </CardTitle>
-        <CardDescription>
-          <i>Group: {ticket.group}, Category: xxx</i>
-          <i>Customer xxx, Date: 2024/04/08</i>
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <Carousel
