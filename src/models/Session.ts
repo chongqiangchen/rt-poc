@@ -1,73 +1,52 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
 const flagSchema = new Schema({
-  reason: [String],
-  additional_comments: String,
+    response_id: {
+        type: Schema.Types.ObjectId,
+        ref: "Ticket.responses",
+        default: undefined,
+    },
+    reasons: [String],
+    additional_comments: String,
+    otherReason: String,
 });
 
-const actionSchema = new Schema({
-  response_id: { type: Schema.Types.ObjectId, ref: "Ticket.responses" },
-  copy: Boolean,
-  try_again: Boolean,
-  flag_poor_response: flagSchema,
+const eventSchema = new Schema({
+    name: {type: String, required: true},
+    action: {type: String, required: true},
+    time: {type: Date, default: new Date()},
+    data: {
+        type: Schema.Types.Mixed
+    }
 });
 
 const ticketSchema = new Schema({
-  ticket_id: { type: String, ref: "Ticket", required: true },
-  start_time: { type: Date, required: true },
-  end_time: { type: Date, default: undefined },
-  actions: {
-    type: [
-      {
-        response_id: {
-          type: Schema.Types.ObjectId,
-          ref: "Ticket.responses",
-          default: undefined,
-        },
-        copy: { type: Boolean, default: false },
-        try_again: { type: Boolean, default: false },
-        flag_poor_response: {
-          reason: { type: [String], default: [] },
-          additional_comments: { type: String, default: "" },
-        },
-      },
-    ],
-    default: [],
-  },
-  jump_to_source: { type: Boolean, default: false },
-  knowledge_base_rate: {
-    type: [
-      {
-        knowledge_id: {
-          type: Schema.Types.ObjectId,
-          ref: "Ticket.related_knowledges",
-          default: undefined,
-        },
-        evaluation: { type: String, default: "" },
-        read_more: { type: Boolean, default: false },
-        jump_to_source: { type: Boolean, default: false },
-      },
-    ],
-    default: [],
-  },
+    ticket_id: {type: String, ref: "Ticket", required: true},
+    start_time: {type: Date, required: true},
+    end_time: {type: Date, default: undefined},
+    flag_poor_responses: [flagSchema],
+    events: [eventSchema]
 });
 
 const surveySchema = new Schema({
-  easy: Number,
-  useful: Number,
-  enjoyable: Number,
-  additional: String,
+    easy_of_use: {type: Number, required: true},
+    usability: {type: Number, required: true},
+    enjoyment_of_use: {type: Number, required: true},
+    additional_comments: String,
 });
 
 const sessionSchema = new Schema({
-  email: { type: String, required: true },
-  start_time: { type: Date, default: Date.now },
-  end_time: { type: Date },
-  survey: surveySchema,
-  related_tickets: [ticketSchema],
+    email: {type: String, required: true},
+    start_time: {type: Date, default: Date.now},
+    end_time: {type: Date},
+    survey: {
+        type: surveySchema,
+        default: undefined,
+    },
+    related_tickets: [ticketSchema],
 });
 
 const Session =
-  mongoose.models.Session || mongoose.model("Session", sessionSchema);
+    mongoose.models.Session || mongoose.model("Session", sessionSchema);
 
 export default Session;
