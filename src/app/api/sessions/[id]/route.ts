@@ -17,7 +17,11 @@ export async function PATCH(
       currentTicket: { ticket_id: string; end_time: Date };
     };
 
-    // update exited ticket end_time
+    console.log("endTime", endTime)
+    console.log("newTicket", newTicket)
+    console.log("currentTicket", currentTicket)
+
+    // update exited flag-poor-response end_time
     if (currentTicket) {
       await Session.updateOne(
         { _id: id, "related_tickets._id": currentTicket.ticket_id },
@@ -27,7 +31,7 @@ export async function PATCH(
       );
     }
 
-    // update session or create a ticket with start time
+    // update session or create a flag-poor-response with start time
     const updatedSession = await Session.updateOne(
       { _id: id },
       {
@@ -50,15 +54,15 @@ export async function PATCH(
       );
     }
 
-    // response with newly created ticket id, then we could use this id to update the corresponding ticket
+    // flag-poor-response with newly created flag-poor-response id, then we could use this id to update the corresponding flag-poor-response
     const session = await Session.findById(id);
     if (session) {
       const newlyAddedTicket =
         session.related_tickets[session.related_tickets.length - 1];
 
-      if (newlyAddedTicket._id) {
+      if (newlyAddedTicket && newlyAddedTicket._id) {
         return new Response(
-          JSON.stringify({ ticketId: newlyAddedTicket._id }),
+          JSON.stringify({ relatedTicketId: newlyAddedTicket._id }),
           {
             status: 200,
           }

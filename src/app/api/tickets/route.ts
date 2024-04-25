@@ -1,7 +1,7 @@
 import connectDb from "@/lib/conncetDb";
 import Ticket from "@/models/Ticket";
 import { NextResponse } from "next/server";
-import ticketsData from "../../../data/ticket_results_v2.json";
+import ticketsData from "../../../data/ticket_results_v3.json";
 import logger from "@/lib/logger";
 
 export async function POST() {

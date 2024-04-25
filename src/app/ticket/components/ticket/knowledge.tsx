@@ -29,9 +29,11 @@ export default function Knowledge({
                     <Link
                         href={knowledge.metadata?.link || ""}
                         target="_blank"
-                        className={cn({"underline decoration-dotted underline-offset-4 hover:decoration-solid cursor-pointer": !!knowledge.metadata?.link})}
+                        className={cn("truncate", {
+                            "underline decoration-dotted underline-offset-4 hover:decoration-solid cursor-pointer": !!knowledge.metadata?.link
+                        })}
                     >
-                        Source: <span>{knowledge.source}</span>
+                        {knowledge.rank === 101 || knowledge.rank === 102 ? "Similiar Ticket: " : "Source: "}{knowledge.metadata?.link}
                     </Link>
                     <div className="flex items-center">
                         <Button
@@ -65,16 +67,11 @@ export default function Knowledge({
                     </div>
                 </CardTitle>
                 <CardDescription>
-                    Rank: <span>{knowledge.rank}</span> - System: xxx - Source Date
-                    2023/11/11
+                    Id: <span>{knowledge.rank}</span> - System: {knowledge.source} - Source Date
+                    20xx/xx/xx
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col">
-                <div>
-                    <span>title: </span>
-                    <span>{knowledge.metadata?.title}</span>
-                </div>
-
                 <p className={!isExpand ? "line-clamp-3" : ""}>{knowledge.content}</p>
 
                 <Button

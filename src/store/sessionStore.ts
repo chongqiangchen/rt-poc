@@ -5,19 +5,19 @@ import { immer } from "zustand/middleware/immer";
 type SessionActions = {
   setEmail: (email: string) => void;
   setSessionId: (email: string) => void;
-  setCurrentTicketId: (id: string) => void;
+  setCurrentRelatedTicketId: (id: string) => void;
   resetSession: () => void;
 };
 
 type SessionState = {
   sessionId: string;
-  currentTicketId: string;
+  currentRelatedTicketId: string;
   email: string;
 };
 
 const initialState: SessionState = {
   sessionId: "",
-  currentTicketId: "",
+  currentRelatedTicketId: "",
   email: "",
 };
 
@@ -30,7 +30,7 @@ const useSessionStore = create<SessionState & SessionActions>()(
           setEmail: (email) => set({ email }),
           setSessionId: (sessionId) => set({ sessionId }),
           resetSession: () => set(initialState),
-          setCurrentTicketId: (currentTicketId) => set({ currentTicketId }),
+          setCurrentRelatedTicketId: (currentRelatedTicketId) => set({ currentRelatedTicketId }),
         }),
         { name: "session" }
       ),

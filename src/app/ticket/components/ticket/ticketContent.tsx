@@ -16,7 +16,7 @@ import Link from "next/link";
 
 export default function TicketContent({ticket}: { ticket: TicketType }) {
     const router = useRouter();
-    const {sessionId, currentTicketId} = useSessionStore();
+    const {sessionId, currentRelatedTicketId} = useSessionStore();
     const {mutate: updateSession} = useUpdateSession();
     return (
         <div className="flex-1">
@@ -29,13 +29,15 @@ export default function TicketContent({ticket}: { ticket: TicketType }) {
                             sessionId,
                             updateField: {
                                 currentTicket: {
-                                    ticket_id: currentTicketId,
+                                    ticket_id: currentRelatedTicketId,
                                     end_time: new Date(),
                                 },
                             },
+                        }, {
+                            onSuccess: () => {
+                                router.push("/ticket");
+                            }
                         });
-
-                        router.push("/ticket");
                     }}
                 >
                     Back
@@ -53,23 +55,14 @@ export default function TicketContent({ticket}: { ticket: TicketType }) {
                         </Link>
                     </CardTitle>
                     <CardDescription>
-                        <i>Group: {ticket.group}, Category: xxx</i>
-                        <i>Customer xxx, Date: 2024/04/08</i>
+                        {/*TODO*/}
+                        <i>Group: {ticket.group}, Category: {ticket.topic}, </i>
+                        <i>Date: 2024/04/08</i>
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p>{ticket.ticket_content.ticket_description}</p>
                     <Separator className="my-4"/>
-                    {ticket.ticket_content.previous_response && (
-                        <>
-                            <h6>Previous Responses</h6>
-                            <CardDescription>
-                                <i>Agent xxx, Date: 2024/04/08</i>
-                            </CardDescription>
-
-                            <p>{ticket.ticket_content.previous_response}</p>
-                        </>
-                    )}
                 </CardContent>
             </Card>
         </div>

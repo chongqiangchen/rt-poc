@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
     debugColumns: true,
   });
-  const { setCurrentTicketId } = useSessionStore();
+  const { setCurrentRelatedTicketId } = useSessionStore();
   const router = useRouter();
 
   return (
@@ -118,16 +118,14 @@ export function DataTable<TData, TValue>({
                       },
                       {
                         onSuccess: ({ data }: { data: any }) => {
-                          setCurrentTicketId(data.ticketId);
-                          console.log(data.ticketId);
+                          setCurrentRelatedTicketId(data.relatedTicketId);
+                          router.push(
+                              `/ticket/${(row.original as TicketType).ticket_id}`
+                          );
                         },
                       }
                     );
                     console.log(`${(row.original as TicketType).ticket_id}`);
-
-                    router.push(
-                      `/ticket/${(row.original as TicketType).ticket_id}`
-                    );
                   }}
                 >
                   {row.getVisibleCells().map((cell) => {

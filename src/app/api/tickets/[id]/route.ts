@@ -21,7 +21,7 @@ export async function GET(
     }
     return NextResponse.json(ticket, { status: 200 });
   } catch (error) {
-    logger.error(error, "Failed to retrieve ticket:");
+    logger.error(error, "Failed to retrieve flag-poor-response:");
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
