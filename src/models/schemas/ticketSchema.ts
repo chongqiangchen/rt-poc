@@ -27,6 +27,7 @@ const ticketSchema = z.object({
   ticket_content: z.object({
     ticket_title: z.string(),
     ticket_description: z.string(),
+    ticket_link: z.string(),
     previous_response: z.string().optional(),
   }),
   response: z.array(responseZodSchema),

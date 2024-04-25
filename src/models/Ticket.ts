@@ -23,6 +23,7 @@ const ticketSchema = new Schema({
   ticket_content: {
     ticket_title: { type: String, required: true },
     ticket_description: { type: String, required: true },
+    ticket_link: String,
     previous_response: String,
   },
   response: [responseSchema],
