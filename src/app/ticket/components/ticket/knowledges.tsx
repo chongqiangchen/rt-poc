@@ -20,7 +20,7 @@ export default function Knowledges({ticket}: { ticket: TicketType }) {
                 />
             </div>
 
-            <ul className="space-y-2 w-full overflow-auto" style={{height: "calc(100vh - 136px)"}}>
+            <ul className="space-y-2 overflow-auto" style={{height: "calc(100vh - 136px)"}}>
                 {knowledges.map((knowledge) => {
                     return <Knowledge knowledge={knowledge} key={knowledge._id}/>;
                 })}

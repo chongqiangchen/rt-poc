@@ -39,11 +39,6 @@ const sessionSchema = new Schema({
     email: {type: String, required: true},
     start_time: {type: Date, default: Date.now},
     end_time: {type: Date},
-    survey: {
-        type: surveySchema,
-        default: undefined,
-    },
-    related_tickets: [ticketSchema],
 });
 
 const Session =
