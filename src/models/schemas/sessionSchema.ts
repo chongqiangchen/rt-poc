@@ -14,12 +14,20 @@ const eventSchema = z.object({
     data: z.object({}).optional(),
 })
 
+const knowledgeSchema = z.object({
+    rank: z.number(),
+    related_knowledge_id: z.string(),
+    thumbs_type: z.enum(["good", "bad"]).optional(),
+})
+
 const ticketSchema = z.object({
+    _id: z.string().optional(),
     ticket_id: z.string(),
     start_time: z.string().datetime(),
     end_time: z.string().datetime().optional(),
     flag_poor_responses: z.array(flagSchema),
     events: z.array(eventSchema),
+    knowledge: z.array(knowledgeSchema)
 })
 
 const surveySchema = z.object({
@@ -42,11 +50,13 @@ type SurveyType = z.infer<typeof surveySchema>;
 type RelatedTicketType = z.infer<typeof ticketSchema>;
 type TicketEventType = z.infer<typeof eventSchema>;
 type TicketFlagType = z.infer<typeof flagSchema>;
+type KnowledgeType = z.infer<typeof knowledgeSchema>;
 
 export {
     type SessionType,
     type RelatedTicketType,
     type SurveyType,
     type TicketEventType,
-    type TicketFlagType
+    type TicketFlagType,
+    type KnowledgeType
 };

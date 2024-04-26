@@ -49,7 +49,6 @@ export function InputForm() {
       { email: formData.email },
       {
         onSuccess: (data) => {
-          console.log(data);
           setEmail(formData.email);
           setSessionId(data.sessionId);
           toast.success("Session has started");

@@ -81,3 +81,23 @@ export async function PATCH(
     );
   }
 }
+
+export async function GET(
+    request: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    await connectDb();
+
+    const { id } = params;
+    try {
+        const session = await Session.findById(id);
+        if (!session) {
+        return NextResponse.json({ message: "Session not found" }, { status: 404 });
+        }
+
+        return NextResponse.json(session, { status: 200 });
+    } catch (error) {
+        logger.error(error, "Failed to fetch session:");
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    }
+}

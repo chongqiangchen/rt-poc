@@ -2,7 +2,7 @@ import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
 import {TicketType} from "@/models/schemas/ticketSchema";
 import {ThumbsDownIcon, ThumbsUpIcon} from "lucide-react";
-import React, {useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import Link from "next/link";
 import {cn} from "@/lib/utils";
 import useTicketTrack from "@/lib/track/useTicketTrack";
@@ -11,17 +11,37 @@ import {
     TSourceLinkClickEventParams,
     TSourceShowMoreEventParams, TSourceThumbsClickEventParams,
 } from "@/lib/track/track";
+import useUpdateKnowledge from "@/lib/requests/useUpdateKnowledge";
+import useSessionStore from "@/store/sessionStore";
+import {useGetSession} from "@/lib/requests/useStartSession";
 
-export default function Knowledge({
-                                      knowledge,
-                                  }: {
-    knowledge: TicketType["related_knowledge"][0];
-}) {
+export default function Knowledge(
+    {
+        knowledge,
+    }: {
+        knowledge: TicketType["related_knowledge"][0];
+    }
+) {
+    const {currentRelatedTicketId, sessionId} = useSessionStore();
     const [isExpand, setIsExpand] = useState(false);
     const [evaluation, setEvaluation] = useState<"good" | "bad" | undefined>(
         undefined
     );
     const {track} = useTicketTrack();
+
+    const {data: session} = useGetSession(sessionId);
+    const {mutate: updateKnowledge} = useUpdateKnowledge();
+
+    const currentSessionRelatedKnowledge = useMemo(() => {
+        const knowledgeList = session?.related_tickets?.find((ticket) => ticket._id?.toString() === currentRelatedTicketId)?.knowledge;
+        return knowledgeList?.find((k) => k.related_knowledge_id === knowledge._id);
+    }, [session, currentRelatedTicketId])
+
+    useEffect(() => {
+        if (currentSessionRelatedKnowledge?.thumbs_type) {
+            setEvaluation(currentSessionRelatedKnowledge.thumbs_type as "good" | "bad")
+        }
+    }, [currentSessionRelatedKnowledge]);
 
     return (
         <Card>
@@ -60,6 +80,16 @@ export default function Knowledge({
                                     }
                                 })
 
+                                updateKnowledge({
+                                    sessionId,
+                                    updateField: {
+                                        related_knowledge_id: knowledge._id,
+                                        rank: knowledge.rank,
+                                        related_ticket_id: currentRelatedTicketId,
+                                        thumbs_type: evaluation === "good" ? undefined : "good",
+                                    }
+                                })
+
                                 setEvaluation((evaluation) =>
                                     evaluation === "good" ? undefined : "good"
                                 );
@@ -79,6 +109,16 @@ export default function Knowledge({
                                         dbSourceId: knowledge._id,
                                         rank: knowledge.rank,
                                         type: "down"
+                                    }
+                                })
+
+                                updateKnowledge({
+                                    sessionId,
+                                    updateField: {
+                                        related_knowledge_id: knowledge._id,
+                                        rank: knowledge.rank,
+                                        related_ticket_id: currentRelatedTicketId,
+                                        thumbs_type: evaluation === "bad" ? undefined : "bad",
                                     }
                                 })
 

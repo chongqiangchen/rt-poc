@@ -25,6 +25,17 @@ const ticketSchema = new Schema({
     start_time: {type: Date, required: true},
     end_time: {type: Date, default: undefined},
     flag_poor_responses: [flagSchema],
+    knowledge: {
+        type: [{
+            rank: Number,
+            related_knowledge_id: {
+                type: Schema.Types.ObjectId,
+                ref: "Ticket.knowledge",
+                default: undefined,
+            },
+            thumbs_type: {type: String, default: undefined},
+        }]
+    },
     events: [eventSchema]
 });
 
@@ -39,6 +50,8 @@ const sessionSchema = new Schema({
     email: {type: String, required: true},
     start_time: {type: Date, default: Date.now},
     end_time: {type: Date},
+    survey: surveySchema,
+    related_tickets: [ticketSchema],
 });
 
 const Session =

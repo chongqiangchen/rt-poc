@@ -4,6 +4,7 @@ import { InputForm } from "@/components/startSessionForm";
 import useSessionStore from "@/store/sessionStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import {useGetSession} from "@/lib/requests/useStartSession";
 
 export default function Home() {
   const { sessionId } = useSessionStore();
