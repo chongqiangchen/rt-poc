@@ -26,7 +26,7 @@ export default function Knowledge({
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-lg flex gap-2">
+                <CardTitle className="text-lg flex justify-between gap-2">
                     <Link
                         href={knowledge.metadata?.link || ""}
                         target="_blank"

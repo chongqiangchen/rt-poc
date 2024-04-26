@@ -58,7 +58,7 @@ export async function PATCH(
     const session = await Session.findById(id);
     if (session) {
       const newlyAddedTicket =
-        session.related_tickets[session.related_tickets.length - 1];
+          session.related_tickets ? session.related_tickets[session.related_tickets.length - 1] : [];
 
       if (newlyAddedTicket && newlyAddedTicket._id) {
         return new Response(
