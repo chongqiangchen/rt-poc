@@ -45,10 +45,8 @@ export function InputForm() {
     useStartSession();
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
-      startSession(
-        {
-          email: formData.email,
-        } as any,
+    startSession(
+      { email: formData.email },
       {
         onSuccess: (data) => {
           console.log(data);

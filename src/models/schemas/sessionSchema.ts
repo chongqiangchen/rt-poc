@@ -33,8 +33,8 @@ const sessionSchema = z.object({
     email: z.string().email(),
     startTime: z.string().datetime().optional(),
     end_time: z.string().datetime().optional(),
-    survey: surveySchema,
-    related_tickets: z.array(ticketSchema),
+    survey: surveySchema.optional(),
+    related_tickets: z.array(ticketSchema).optional(),
 });
 
 type SessionType = z.infer<typeof sessionSchema>;

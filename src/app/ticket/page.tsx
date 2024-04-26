@@ -1,16 +1,10 @@
-import { promises as fs } from "fs";
-import path from "path";
-import { z } from "zod";
-
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 
 import {
   ModifiedTicketType,
   TicketType,
-  ticketSchema,
 } from "@/models/schemas/ticketSchema";
-import axiosInstance from "@/lib/axiosInstance";
 import connectDb from "@/lib/conncetDb";
 import Ticket from "@/models/Ticket";
 

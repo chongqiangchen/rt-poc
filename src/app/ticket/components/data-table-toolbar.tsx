@@ -23,7 +23,7 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center space-x-2">
           <div>Ticket reference</div>
           <Input
             placeholder="Start typing a ticket number to lookup a ticket"

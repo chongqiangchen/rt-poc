@@ -38,7 +38,7 @@ export default function Knowledge({
                             data: {
                                 url: knowledge.metadata?.link || "",
                                 rank: knowledge.rank,
-                                _id: knowledge._id
+                                dbSourceId: knowledge._id
                             }
                         })}
                     >
@@ -54,7 +54,7 @@ export default function Knowledge({
                                 track<TSourceThumbsClickEventParams>({
                                     eventName: ETicketEventName.SOURCE_THUMBS_CLICK,
                                     data: {
-                                        _id: knowledge._id,
+                                        dbSourceId: knowledge._id,
                                         rank: knowledge.rank,
                                         type: "up"
                                     }
@@ -76,7 +76,7 @@ export default function Knowledge({
                                 track<TSourceThumbsClickEventParams>({
                                     eventName: ETicketEventName.SOURCE_THUMBS_CLICK,
                                     data: {
-                                        _id: knowledge._id,
+                                        dbSourceId: knowledge._id,
                                         rank: knowledge.rank,
                                         type: "down"
                                     }
@@ -107,7 +107,7 @@ export default function Knowledge({
                             eventName: ETicketEventName.SOURCE_SHOW_MORE,
                             data: {
                                 rank: knowledge.rank,
-                                _id: knowledge._id,
+                                dbSourceId: knowledge._id,
                             }
                         })
                         return setIsExpand((isExpand) => !isExpand);

@@ -31,18 +31,15 @@ export default function Response({ ticket }: { ticket: TicketType }) {
     });
   }, [api]);
 
-  console.log(ticket.response)
-
   const copyToClipboard = async (text: string) => {
     if ("clipboard" in navigator) {
       track<TResponseCopyEventParams>({
         eventName: ETicketEventName.RESPONSE_COPY,
         data: {
-          targetResponseId: ticket.response[current - 1].id,
-          targetId: ticket.response[current - 1]._id
+          currentResponseId: ticket.response[current - 1].id,
+          dbCurrentId: ticket.response[current - 1]._id
         }
       })
-
       await navigator.clipboard.writeText(text);
       toast.success("copied");
     }
@@ -53,7 +50,9 @@ export default function Response({ ticket }: { ticket: TicketType }) {
       eventName: ETicketEventName.RESPONSE_SWITCH,
       data: {
         targetResponseId: ticket.response[current - 2].id,
-        targetId: ticket.response[current - 2]._id,
+        dbTargetId: ticket.response[current - 2]._id,
+        currentResponseId: ticket.response[current - 1].id,
+        dbCurrentId: ticket.response[current - 1]._id,
         type: 'prev'
       }
     })
@@ -65,7 +64,9 @@ export default function Response({ ticket }: { ticket: TicketType }) {
       eventName: ETicketEventName.RESPONSE_SWITCH,
       data: {
         targetResponseId: ticket.response[current].id,
-        targetId: ticket.response[current]._id,
+        dbTargetId: ticket.response[current]._id,
+        currentResponseId: ticket.response[current - 1].id,
+        dbCurrentId: ticket.response[current - 1]._id,
         type: 'next'
       }
     })

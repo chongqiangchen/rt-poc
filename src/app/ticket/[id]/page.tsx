@@ -23,7 +23,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <TicketContent ticket={ticket} />
           <Knowledges ticket={ticket} />
 
-          <div style={{ width: "clamp(20rem, 40vw, 38rem)" }}>
+          <div style={{ width: "clamp(20rem, 30vw, 38rem)" }}>
             <div className="min-h-12 flex items-center">
               <h3>Suggested responses</h3>
             </div>

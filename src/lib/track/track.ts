@@ -26,27 +26,29 @@ export type TTicketLinkClickEventParams = {
 export type TSourceLinkClickEventParams = {
     url: string;
     rank: number;
-    _id: string;
+    dbSourceId: string;
 }
 
 export type TSourceShowMoreEventParams = {
-    _id: string; // db source id
+    dbSourceId: string; // source db source id
     rank: number;
 }
 
 export type TSourceThumbsClickEventParams = {
-    _id: string;
+    dbSourceId: string;
     rank: number;
     type: 'up' | 'down';
 }
 
 export type TResponseSwitchEventParams = {
+    currentResponseId: string;
     targetResponseId: string;
-    targetId: string;
+    dbTargetId: string;
+    dbCurrentId: string;
     type: 'prev' | 'next';
 }
 
 export type TResponseCopyEventParams = {
-    targetResponseId: string;
-    targetId: string;
+    currentResponseId: string;
+    dbCurrentId: string;
 }
