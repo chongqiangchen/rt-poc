@@ -13,8 +13,6 @@ import dayjs from "dayjs";
 
 export default function TicketContent({ticket}: { ticket: TicketType }) {
     const router = useRouter();
-    const {sessionId, currentRelatedTicketId} = useSessionStore();
-    const {mutate: updateSession} = useUpdateSession();
     const {track} = useTicketTrack();
 
     return (
@@ -24,19 +22,7 @@ export default function TicketContent({ticket}: { ticket: TicketType }) {
                 <Button
                     size="sm"
                     onClick={() => {
-                        updateSession({
-                            sessionId,
-                            updateField: {
-                                currentTicket: {
-                                    ticket_id: currentRelatedTicketId,
-                                    end_time: new Date(),
-                                },
-                            },
-                        }, {
-                            onSuccess: () => {
-                                router.push("/ticket");
-                            }
-                        });
+                        router.push("/ticket");
                     }}
                 >
                     Back

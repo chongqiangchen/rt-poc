@@ -31,9 +31,10 @@ const ticketSchema = z.object({
 })
 
 const surveySchema = z.object({
-    easy_of_use: z.number(),
-    usability: z.number(),
-    enjoyment_of_use: z.number(),
+    effectiveness: z.number(),
+    efficiency: z.number(),
+    satisfaction: z.number(),
+    time: z.number(),
     additional_comments: z.string().optional(),
 })
 

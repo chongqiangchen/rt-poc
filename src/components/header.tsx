@@ -16,18 +16,19 @@ import {
 } from "@/components/ui/dialog";
 import FlagForm from "@/app/ticket/components/ticket/flagForm";
 import SurveyForm from "./surveyForm";
+import Link from "next/link";
 
 export default function Header() {
   const { email, sessionId } = useSessionStore();
   const [isSurveyFormOpen, setIsSurveyFormOpen] = useState(false);
   return (
     <div className="w-full flex justify-between items-center px-8 py-2 bg-gray-300 min-h-16">
-      <section className="flex justify-center items-center space-x-2">
+      <Link href="/" className="flex justify-center items-center space-x-2">
         <Headset className="w-8 h-8" />
         <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Ticket Assist - TRIAL POC V0.1
         </h3>
-      </section>
+      </Link>
       {sessionId && (
         <div className="space-x-2">
           <span>{email}</span>

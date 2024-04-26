@@ -32,35 +32,35 @@ import {toast} from "sonner";
 
 const reasonItems = [
     {
-        id: "recents",
-        label: "Recents",
+        id: "Unclear",
+        label: "Unclear",
     },
     {
-        id: "home",
-        label: "Home",
+        id: "Poor tone",
+        label: "Poor tone",
     },
     {
-        id: "applications",
-        label: "Applications",
+        id: "Irrelevant",
+        label: "Irrelevant",
     },
     {
-        id: "desktop",
-        label: "Desktop",
+        id: "Unprofessional",
+        label: "Unprofessional",
     },
     {
-        id: "downloads",
-        label: "Downloads",
+        id: "Misleading",
+        label: "Misleading",
     },
     {
-        id: "documents",
-        label: "Documents",
+        id: "Unsafe",
+        label: "Unsafe",
     },
     {id: "other", label: "Other"},
 ] as const;
 
 const formSchema = z.object({
     reasons: z.array(z.string()).refine((value) => value.some((item) => item), {
-        message: "You have to select at least one item.",
+        message: "Please select at least one reason.",
     }),
     otherReason: z.string().optional(),
     aditionalComments: z.string().optional(),
@@ -123,7 +123,7 @@ export default function FlagForm(
                         name="reasons"
                         render={() => (
                             <FormItem>
-                                <div className="grid grid-cols-3 w-full">
+                                <div className="grid w-full">
                                     {reasonItems.slice(0, -1).map((item) => (
                                         <FormField
                                             key={item.id}
@@ -150,7 +150,7 @@ export default function FlagForm(
                                                             />
                                                         </FormControl>
                                                         <FormLabel
-                                                            className="text-sm font-normal cursor-pointer px-2 py-4">
+                                                            className="text-sm font-normal cursor-pointer px-2 py-2">
                                                             {item.label}
                                                         </FormLabel>
                                                     </FormItem>

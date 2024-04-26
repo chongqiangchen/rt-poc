@@ -28,8 +28,8 @@ import useStartSession from "@/lib/requests/useStartSession";
 
 const FormSchema = z.object({
   email: z
-    .string({ required_error: "email should be added" })
-    .email({ message: "should input a valid email" }),
+    .string({ required_error: "Please enter a valid email address" })
+    .email({ message: "Please enter a valid email address" }),
 });
 
 export function InputForm() {

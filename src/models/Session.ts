@@ -40,9 +40,10 @@ const ticketSchema = new Schema({
 });
 
 const surveySchema = new Schema({
-    easy_of_use: {type: Number, required: true},
-    usability: {type: Number, required: true},
-    enjoyment_of_use: {type: Number, required: true},
+    effectiveness: {type: Number, required: true},
+    efficiency: {type: Number, required: true},
+    satisfaction: {type: Number, required: true},
+    time: {type: Number, required: true},
     additional_comments: String,
 });
 

@@ -14,12 +14,6 @@ export async function POST(
 
     try {
         const res = (await request.json()) as SurveyType;
-        const {
-            easy_of_use,
-            usability,
-            enjoyment_of_use,
-            additional_comments
-        } = res;
 
         const session = await Session.findById(sessionId);
 
@@ -34,12 +28,7 @@ export async function POST(
             {_id: sessionId},
             {
                 $set: {
-                    survey: {
-                        easy_of_use,
-                        usability,
-                        enjoyment_of_use,
-                        additional_comments
-                    }
+                    survey: res
                 }
             }
         )

@@ -24,6 +24,7 @@ import {DialogHeader, DialogTitle} from "./ui/dialog";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 import {Separator} from "./ui/separator";
 import useUpdateSurvey from "@/lib/requests/useUpdateSurvey";
+import {Slider} from "@/components/ui/slider";
 
 const reasonItems = [
     {
@@ -53,17 +54,7 @@ const reasonItems = [
     {id: "other", label: "Other"},
 ] as const;
 
-const USABILITY_OPTIONS = [
-    "not_at_all_useful",
-    "somewhat_useful",
-    "moderately_useful",
-    "highly_useful",
-    "very_useful",
-]
-
-const EASY_OF_USE_OPTIONS = ["very_hard", "hard", "neutral", "easy", "very_easy"];
-
-const ENJOYMENT_OF_USE_OPTIONS = [
+const OPTIONS = [
     "strongly_disagree",
     "disagree",
     "neither_agree_nor_disagree",
@@ -72,22 +63,28 @@ const ENJOYMENT_OF_USE_OPTIONS = [
 ]
 
 const formSchema = z.object({
-    easyOfUse: z.enum(["very_hard", "hard", "neutral", "easy", "very_easy"], {
+    effectiveness: z.enum([
+        "strongly_disagree",
+        "disagree",
+        "neither_agree_nor_disagree",
+        "agree",
+        "strongly_agree",
+    ], {
         required_error: "please select how easy it is to use .",
     }),
-    usability: z.enum(
+    efficiency: z.enum(
         [
-            "not_at_all_useful",
-            "somewhat_useful",
-            "moderately_useful",
-            "highly_useful",
-            "very_useful",
+            "strongly_disagree",
+            "disagree",
+            "neither_agree_nor_disagree",
+            "agree",
+            "strongly_agree",
         ],
         {
             required_error: "please select how useful it is to use.",
         }
     ),
-    enjoymentOfUse: z.enum(
+    satisfaction: z.enum(
         [
             "strongly_disagree",
             "disagree",
@@ -99,6 +96,7 @@ const formSchema = z.object({
             required_error: "please select how enjoyable it is to use.",
         }
     ),
+    time: z.number(),
     aditionalComments: z.string().optional(),
 });
 
@@ -137,9 +135,10 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
             await updateSurvey({
                 sessionId,
                 updateField: {
-                    easy_of_use: getEnumIndex(values.easyOfUse, EASY_OF_USE_OPTIONS) + 1,
-                    usability: getEnumIndex(values.usability, USABILITY_OPTIONS) + 1,
-                    enjoyment_of_use: getEnumIndex(values.enjoymentOfUse, ENJOYMENT_OF_USE_OPTIONS) + 1,
+                    effectiveness: getEnumIndex(values.effectiveness, OPTIONS),
+                    efficiency: getEnumIndex(values.efficiency, OPTIONS),
+                    satisfaction: getEnumIndex(values.satisfaction, OPTIONS),
+                    time: values.time,
                     additional_comments: values.aditionalComments,
                 },
             })
@@ -162,10 +161,10 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
                         control={form.control}
-                        name="easyOfUse"
+                        name="effectiveness"
                         render={({field}) => (
                             <FormItem className="space-y-3">
-                                <FormLabel>How easy was it to use the tool?</FormLabel>
+                                <FormLabel>Effectiveness - The AI Assistant was useful in helping me answer tickets: ?</FormLabel>
                                 <FormControl>
                                     <RadioGroup
                                         onValueChange={field.onChange}
@@ -175,33 +174,33 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                                         <FormItem
                                             className="flex-1 flex flex-col items-start justify-center space-y-3 text-center">
                                             <FormControl className="mx-auto">
-                                                <RadioGroupItem value="very_hard"/>
+                                                <RadioGroupItem value="strongly_disagree"/>
                                             </FormControl>
-                                            <FormLabel className="font-normal mx-auto">
-                                                Very hard
+                                            <FormLabel className="font-normal mx-auto text-xs text-gray-500 text-center">
+                                                Strongly Disagree
                                             </FormLabel>
                                         </FormItem>
                                         <FormItem className="flex-1 flex items-start justify-center space-y-0">
                                             <FormControl>
-                                                <RadioGroupItem value="hard"/>
+                                                <RadioGroupItem value="disagree"/>
                                             </FormControl>
                                         </FormItem>
                                         <FormItem className="flex-1 flex items-start justify-center space-y-0">
                                             <FormControl>
-                                                <RadioGroupItem value="neutral"/>
+                                                <RadioGroupItem value="neither_agree_nor_disagree"/>
                                             </FormControl>
                                         </FormItem>
                                         <FormItem className="flex-1 flex items-start justify-center space-y-0">
                                             <FormControl>
-                                                <RadioGroupItem value="easy"/>
+                                                <RadioGroupItem value="agree"/>
                                             </FormControl>
                                         </FormItem>
                                         <FormItem className="flex-1 flex flex-col items-start justify-center space-y-3">
                                             <FormControl>
-                                                <RadioGroupItem value="very_easy" className="mx-auto"/>
+                                                <RadioGroupItem value="strongly_agree" className="mx-auto"/>
                                             </FormControl>
-                                            <FormLabel className="font-normal mx-auto">
-                                                Very easy
+                                            <FormLabel className="font-normal mx-auto text-xs text-gray-500 text-center">
+                                                Strongly<br />Agree
                                             </FormLabel>
                                         </FormItem>
                                     </RadioGroup>
@@ -213,10 +212,10 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                     <Separator className="my-4"/>
                     <FormField
                         control={form.control}
-                        name="usability"
+                        name="efficiency"
                         render={({field}) => (
                             <FormItem className="space-y-3">
-                                <FormLabel>How useful was the tool?</FormLabel>
+                                <FormLabel>Efficiency - Using the assistant made it easy to answer tickets:</FormLabel>
                                 <FormControl>
                                     <RadioGroup
                                         onValueChange={field.onChange}
@@ -226,38 +225,38 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                                         <FormItem className="flex justify-center flex-col items-start space-y-3 flex-1">
                                             <FormControl>
                                                 <RadioGroupItem
-                                                    value="not_at_all_useful"
+                                                    value="strongly_disagree"
                                                     className="mx-auto"
                                                 />
                                             </FormControl>
-                                            <FormLabel className="font-normal mx-auto text-center">
-                                                Not at all useful
+                                            <FormLabel className="font-normal mx-auto text-xs text-gray-500 text-center">
+                                                Strongly Disagree
                                             </FormLabel>
                                         </FormItem>
                                         <FormItem className="flex justify-center items-start space-y-3 flex-1">
                                             <FormControl>
-                                                <RadioGroupItem value="somewhat_useful"/>
+                                                <RadioGroupItem value="disagree"/>
                                             </FormControl>
                                         </FormItem>
                                         <FormItem className="flex justify-center items-start space-y-3 flex-1">
                                             <FormControl>
-                                                <RadioGroupItem value="moderately_useful"/>
+                                                <RadioGroupItem value="neither_agree_nor_disagree"/>
                                             </FormControl>
                                         </FormItem>
                                         <FormItem className="flex justify-center items-start space-y-3 flex-1">
                                             <FormControl>
-                                                <RadioGroupItem value="highly_useful"/>
+                                                <RadioGroupItem value="agree"/>
                                             </FormControl>
                                         </FormItem>
                                         <FormItem className="flex justify-center flex-col items-start space-y-3 flex-1">
                                             <FormControl>
                                                 <RadioGroupItem
-                                                    value="very_useful"
+                                                    value="strongly_agree"
                                                     className="mx-auto"
                                                 />
                                             </FormControl>
-                                            <FormLabel className="font-normal mx-auto text-center">
-                                                Very useful
+                                            <FormLabel className="font-normal mx-auto text-xs text-gray-500 text-center">
+                                                Strongly<br />Agree
                                             </FormLabel>
                                         </FormItem>
                                     </RadioGroup>
@@ -269,11 +268,11 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                     <Separator className="my-4"/>
                     <FormField
                         control={form.control}
-                        name="enjoymentOfUse"
+                        name="satisfaction"
                         render={({field}) => (
                             <FormItem className="space-y-3">
                                 <FormLabel>
-                                    Rate your agreement: I enjoyed using the tool?
+                                    Satisfaction - I enjoyed using the assistant:
                                 </FormLabel>
                                 <FormControl>
                                     <RadioGroup
@@ -288,8 +287,8 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                                                     value="strongly_disagree"
                                                 />
                                             </FormControl>
-                                            <FormLabel className="font-normal mx-auto text-center">
-                                                Strongly disagree
+                                            <FormLabel className="font-normal mx-auto text-xs text-gray-500 text-center">
+                                                Strongly Disagree
                                             </FormLabel>
                                         </FormItem>
                                         <FormItem className="flex items-start justify-center space-y-3 flex-1">
@@ -317,11 +316,34 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                                                     value="strongly_agree"
                                                 />
                                             </FormControl>
-                                            <FormLabel className="font-normal mx-auto text-center">
-                                                Strongly agree
+                                            <FormLabel className="font-normal mx-auto text-xs text-gray-500 text-center">
+                                                Strongly<br />Agree
                                             </FormLabel>
                                         </FormItem>
                                     </RadioGroup>
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="time"
+                        render={({field}) => (
+                            <FormItem className="my-4">
+                                <FormLabel>Time - I think that using the assistant could help me reduce time spent per ticket by…</FormLabel>
+                                <FormControl>
+                                    <div className="flex items-center gap-4">
+                                        <Slider
+                                            {...field}
+                                            value={field.value ? [field.value] : [0]}
+                                            onValueChange={e => field.onChange(e[0])}
+                                            defaultValue={[0]}
+                                            max={100}
+                                            step={10}
+                                        />
+                                        <span className="whitespace-nowrap text-xs">{field.value} %</span>
+                                    </div>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
@@ -350,7 +372,7 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit">Submit and end session</Button>
+                        <Button type="submit">Submit and Logout</Button>
                     </div>
                 </form>
             </Form>
