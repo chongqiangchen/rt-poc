@@ -92,7 +92,7 @@ export async function GET(
     try {
         const session = await Session.findById(id);
         if (!session) {
-            return NextResponse.json({ message: "Session not found" }, { status: 404 });
+            return NextResponse.json(session, { status: 200 });
         }
 
         return NextResponse.json(session, { status: 200 });
