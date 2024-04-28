@@ -29,13 +29,6 @@ export function DataTablePagination<TData>(
         defaultPageSize = 100
     }: DataTablePaginationProps<TData>
 ) {
-
-    useEffect(() => {
-        return () => {
-            table.setPageSize(defaultPageSize);
-        };
-    }, [defaultPageSize]);
-
     return (
         <div className="flex items-center justify-between px-2">
             <div></div>

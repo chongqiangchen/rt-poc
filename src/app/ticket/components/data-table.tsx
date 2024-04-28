@@ -58,7 +58,13 @@ export function DataTable<TData, TValue>({
       sorting,
       columnVisibility,
       rowSelection,
-      columnFilters,
+      columnFilters
+    },
+    initialState: {
+      pagination: {
+        pageSize: 100,
+        pageIndex: 0,
+      }
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
@@ -156,7 +162,6 @@ export function DataTable<TData, TValue>({
       <DataTablePagination
           table={table}
           pageSizeOptions={[20,50,100,200]}
-          defaultPageSize={100}
       />
     </div>
   );
