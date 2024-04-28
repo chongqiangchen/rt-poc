@@ -64,6 +64,14 @@ const formSchema = z.object({
     }),
     otherReason: z.string().optional(),
     aditionalComments: z.string().optional(),
+}).refine((data) => {
+    if (data.reasons.includes('other')) {
+        return data.otherReason && data.otherReason.trim().length > 0;
+    }
+    return true;
+}, {
+    message: "Please input the other reason.",
+    path: ["otherReason"],
 });
 
 export default function FlagForm(
@@ -162,7 +170,7 @@ export default function FlagForm(
                             </FormItem>
                         )}
                     />
-                    <div className="flex items-center justify-between gap-4 h-[52px] relative">
+                    <div className="flex justify-between gap-4 h-[52px] relative">
                         <FormField
                             control={form.control}
                             name="reasons"
@@ -198,7 +206,7 @@ export default function FlagForm(
                                                                 />
                                                             </FormControl>
                                                             <FormLabel
-                                                                className="text-sm font-normal px-2 py-4 cursor-pointer">
+                                                                className="text-sm font-normal px-2 py-2 cursor-pointer">
                                                                 {item.label}
                                                             </FormLabel>
                                                             <FormMessage
