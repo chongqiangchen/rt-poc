@@ -8,6 +8,7 @@ import {
 import connectDb from "@/lib/conncetDb";
 import Ticket from "@/models/Ticket";
 
+const dynamic = 'force-dynamic'
 async function getTickets() {
   await connectDb();
   const tickets = (await Ticket.find({})) as TicketType[];
