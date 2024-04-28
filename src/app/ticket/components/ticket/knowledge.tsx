@@ -138,7 +138,7 @@ export default function Knowledge(
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col">
-                <p className={!isExpand ? "line-clamp-3" : ""}>{knowledge.content}</p>
+                <p className={`${!isExpand ? "line-clamp-3" : ""} ${isExpand ? "whitespace-pre-wrap" : ""}`}>{knowledge.content}</p>
                 <Button
                     variant="link"
                     className="p-0 underline decoration-1 self-end"

@@ -50,7 +50,7 @@ export default function TicketContent({ticket}: { ticket: TicketType }) {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>{ticket.ticket_content.ticket_description}</p>
+                    <p className="whitespace-pre-wrap">{ticket.ticket_content.ticket_description}</p>
                     <Separator className="my-4"/>
                 </CardContent>
             </Card>

@@ -108,7 +108,7 @@ export default function Response({ticket}: { ticket: TicketType }) {
                 >
                     <CarouselContent>
                         {ticket.response.map((res) => (
-                            <CarouselItem key={res._id}>{res.answer}</CarouselItem>
+                            <CarouselItem className="whitespace-pre-wrap" key={res._id}>{res.answer}</CarouselItem>
                         ))}
                     </CarouselContent>
                 </Carousel>
