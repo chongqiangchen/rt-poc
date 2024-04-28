@@ -9,6 +9,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
+  getPaginationRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
   getSortedRowModel,
@@ -66,6 +67,7 @@ export function DataTable<TData, TValue>({
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -151,6 +153,11 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination
+          table={table}
+          pageSizeOptions={[20,50,100,200]}
+          defaultPageSize={100}
+      />
     </div>
   );
 }
