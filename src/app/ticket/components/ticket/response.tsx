@@ -122,7 +122,7 @@ export default function Response({ticket}: { ticket: TicketType }) {
                         copyToClipboard(ticket.response[api.selectedScrollSnap()].answer);
                     }}
                 >
-                    {isCopy ? "Copied!" : "Copy to clipboard"}
+                    {isCopy ? "Copied!" : "Mark as approved response & Copy"}
                 </Button>
 
                 <Dialog open={isPoorResponseFormOpen}>
