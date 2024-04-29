@@ -148,7 +148,10 @@ export default function SurveyForm({closeDialog}: { closeDialog: Function }) {
             toast.success("Logout successful");
             router.push("/");
         } catch (e) {
-            toast.error("Log out failed, please try again");
+            resetSession();
+            closeDialog();
+            toast.success("Logout successful");
+            router.push("/");
         }
     }
 
