@@ -243,9 +243,9 @@ export default function FlagForm(
                         name="aditionalComments"
                         render={({field}) => (
                             <FormItem className="my-4">
-                                <FormLabel>Additional comments (optional): Please provide possible root causes (e.g., insufficient inputs) to help us improve</FormLabel>
+                                <FormLabel>Additional comments (optional):</FormLabel>
                                 <FormControl>
-                                    <Textarea {...field} />
+                                    <Textarea placeholder="Please provide possible root causes (e.g., insufficient inputs) to help us improve" {...field} />
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
